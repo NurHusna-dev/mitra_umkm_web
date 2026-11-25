@@ -68,22 +68,18 @@ h1, h2, h3 {
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
-/* Galeri slider */
-.slider { position: relative; height: 26rem; overflow: hidden; touch-action: pan-y; }
-.slider figure {
-  position: absolute; top: 50%; left: 50%;
-  width: min(16rem, 60vw); height: 22rem; margin: 0;
-  transform: translate(-50%, -50%);
-  transition: transform .5s cubic-bezier(.2,.8,.2,1), opacity .5s;
-  cursor: pointer;
-}
+/* Galeri slider: 3 foto per halaman, berpindah saat tombol next/prev diklik */
+.slider { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; touch-action: pan-y; }
+@media (min-width: 768px) { .slider { gap: 1.25rem; } }
+.slider figure { margin: 0; width: 100%; }
 .slider-btn {
   position: absolute; top: 50%; transform: translateY(-50%); z-index: 20;
   width: 2.75rem; height: 2.75rem; border-radius: 9999px;
   background: #D2AC8A; color: #0F0D0C; font-weight: 800;
 }
+.slider-btn.left-0 { left: -.75rem; }
+.slider-btn.right-0 { right: -.75rem; }
 .slider-btn:hover { background: #E3CDB8; }
-@media (prefers-reduced-motion: reduce) { .slider figure { transition: none; } }
 
 /* Mode grid (filter kategori): kolom masonry seperti semula */
 #galeri-grid:not(.slider) { columns: 2; column-gap: .75rem; }
@@ -106,8 +102,13 @@ section.foto-hero {
   position: relative;
   background-size: cover !important;
   background-position: center center !important;
-  margin-top: 0 !important; 
+  /* Tarik hero ke bawah header (tinggi header = h-20 80px + border 1px = 81px)
+     supaya foto terlihat tembus di balik header yang transparan */
+  margin-top: -81px !important;
 }
+/* Kompensasi: isi hero tetap di posisi semula, tidak tertutup header */
+section.foto-hero > div { padding-top: calc(3rem + 81px); }
+@media (min-width: 768px) { section.foto-hero > div { padding-top: calc(5rem + 81px); } }
 
 section.foto-hero, 
 section.foto-pengantar, 
@@ -120,3 +121,11 @@ section.foto-penutup {
   background-position: center center !important;
   background-repeat: no-repeat !important;
 }
+
+/* PERBAIKAN HEADER STICKY
+   Penyebab header ikut hilang saat scroll: <body> memakai class overflow-x-hidden
+   (di samping html { overflow-x: hidden }). Dua-duanya bersamaan membuat body
+   menjadi "wadah scroll" sendiri sehingga position: sticky pada header berhenti
+   bekerja. overflow-x: clip tetap memotong konten yang melebar, tapi tidak
+   membuat wadah scroll, jadi header kembali menempel di atas. */
+body.overflow-x-hidden { overflow-x: clip !important; }

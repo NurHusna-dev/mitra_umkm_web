@@ -12,42 +12,58 @@
   /* FOTO 3: ALUR BOOKING. Saran file: assets/foto/alur.jpg */
   --foto-alur: url('../assets/foto/alur.jpg');
   --pos-alur: center;
-  --tint-alur: rgba(45, 6, 16, .88);
+  --tint-alur: rgba(15, 13, 12, .88);
 
-  /* FOTO 4: PENUTUP (blok crimson sebelum footer)*/
+  /* FOTO 4: PENUTUP (blok sebelum footer)*/
   --foto-penutup: none;
   --pos-penutup: center;
   --tint-penutup: rgba(0, 0, 0, 0.934);
 }
 
 /* ---- di bawah ini tidak perlu diedit ---- */
-.foto-hero      { background-image: linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,0) 9rem), linear-gradient(var(--tint-hero), var(--tint-hero)), var(--foto-hero);   background-position: top, center, var(--pos-hero); }
-.foto-pengantar { background-image: linear-gradient(var(--tint-pengantar), var(--tint-pengantar)), var(--foto-pengantar);   background-position: center, var(--pos-pengantar); }
-.foto-alur      { background-image: linear-gradient(var(--tint-alur), var(--tint-alur)), var(--foto-alur);                   background-position: center, var(--pos-alur); }
-.foto-penutup   { background-image: linear-gradient(var(--tint-penutup), var(--tint-penutup)), var(--foto-penutup);         background-position: center, var(--pos-penutup); }
-.foto-hero, .foto-pengantar, .foto-alur, .foto-penutup { background-size: cover; background-repeat: no-repeat; }
-
-/* Transisi blend antar section foto */
-.fade-atas, .fade-bawah { position: relative; }
-
-.fade-bawah::after, .fade-atas::before {
-  content: ""; position: absolute; left: 0; right: 0;
-  height: clamp(7rem, 35%, 14rem);
-  pointer-events: none; z-index: 0;
+:root {
+  --lebar-foto: 90rem;   /* lebar maksimum foto; di layar lebih lebar, foto tetap segini dan di tengah */
+  --fade-x: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
+  --fade-y-penuh: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
 }
-.fade-bawah::after {
-  bottom: 0;
-  background: linear-gradient(to bottom,
-    rgba(15,13,12,0) 0%,   rgba(15,13,12,.10) 20%,
-    rgba(15,13,12,.30) 40%, rgba(15,13,12,.58) 60%,
-    rgba(15,13,12,.84) 80%, #0F0D0C 100%);
+/* Di layar yang lebih sempit dari lebar foto, jangan pudarkan sisi kiri-kanan */
+@media (max-width: 90rem) { :root { --fade-x: linear-gradient(#000, #000); } }
+
+.foto-hero, .foto-pengantar, .foto-alur, .foto-penutup { position: relative; isolation: isolate; }
+
+.foto-hero::before, .foto-pengantar::before, .foto-alur::before, .foto-penutup::before {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  top: 0; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: min(100%, var(--lebar-foto));
+  background-size: cover; background-repeat: no-repeat;
+  -webkit-mask-image: var(--fade-x), var(--fade-y, linear-gradient(#000, #000));
+  -webkit-mask-composite: source-in;
+          mask-image: var(--fade-x), var(--fade-y, linear-gradient(#000, #000));
+          mask-composite: intersect;
 }
-.fade-atas::before {
-  top: 0;
-  background: linear-gradient(to top,
-    rgba(15,13,12,0) 0%,   rgba(15,13,12,.10) 20%,
-    rgba(15,13,12,.30) 40%, rgba(15,13,12,.58) 60%,
-    rgba(15,13,12,.84) 80%, #0F0D0C 100%);
+
+.foto-hero { --fade-y: linear-gradient(to bottom, #000 55%, transparent); }
+.foto-hero::before {
+  background-image: linear-gradient(to bottom, rgba(0,0,0,.55), rgba(0,0,0,0) 9rem),
+                    linear-gradient(var(--tint-hero), var(--tint-hero)), var(--foto-hero);
+  background-position: top, center, var(--pos-hero);
+}
+
+.foto-pengantar { --fade-y: var(--fade-y-penuh); }
+.foto-pengantar::before {
+  background-image: linear-gradient(var(--tint-pengantar), var(--tint-pengantar)), var(--foto-pengantar);
+  background-position: center, var(--pos-pengantar);
+}
+
+.foto-alur { --fade-y: var(--fade-y-penuh); }
+.foto-alur::before {
+  background-image: linear-gradient(var(--tint-alur), var(--tint-alur)), var(--foto-alur);
+  background-position: center, var(--pos-alur);
+}
+
+.foto-penutup::before {
+  background-image: linear-gradient(var(--tint-penutup), var(--tint-penutup)), var(--foto-penutup);
+  background-position: center, var(--pos-penutup);
 }
 
 /* Foto blend di section Daftar Layanan (area kosong kanan bawah) */
@@ -57,22 +73,23 @@
 }
 .foto-layanan {
   position: absolute; z-index: 0; pointer-events: none;
-  right: 0; bottom: 0; width: 48%; height: 90%;
+  right: max(0px, calc((100% - var(--lebar-foto)) / 2));
+  bottom: 0; width: min(48%, 43rem); height: 90%;
   background: var(--foto-layanan) var(--pos-layanan) / cover no-repeat;
   opacity: .55;
   -webkit-mask-image: radial-gradient(ellipse 70% 70% at 60% 60%, #000 25%, transparent 75%);
           mask-image: radial-gradient(ellipse 70% 70% at 60% 60%, #000 25%, transparent 75%);
 }
 
-/*FOTO TAMBAHAN: Sisi Kiri Daftar Layanan */
+/* FOTO TAMBAHAN: Sisi Kiri Daftar Layanan */
 :root {
   --foto-layanan-kiri: url('../assets/foto/nail-art.jpg'); /* Ganti path foto kiri sesuai kebutuhan */
   --pos-layanan-kiri: center;
 }
-
 .foto-layanan-kiri {
   position: absolute; z-index: 0; pointer-events: none;
-  left: 0; bottom: 0; width: 48%; height: 90%;
+  left: max(0px, calc((100% - var(--lebar-foto)) / 2));
+  bottom: 0; width: min(48%, 43rem); height: 90%;
   background: var(--foto-layanan-kiri) var(--pos-layanan-kiri) / cover no-repeat;
   opacity: .55;
   -webkit-mask-image: radial-gradient(ellipse 70% 70% at 40% 60%, #000 25%, transparent 75%);

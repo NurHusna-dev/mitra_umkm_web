@@ -56,50 +56,46 @@ GALERI.forEach((g, i) => {
   grid.appendChild(fig);
 });
 
-let idx = 0;              // foto yang sedang di tengah
+let idx = 0;              // halaman slider yang sedang tampil (0, 1, 2, ...)
 let modeSlider = true;    // true hanya saat filter "Semua"
-let jumlahTampil = 0;
+let jumlahHalaman = 0;
+const PER_HALAMAN = 3;    // jumlah foto yang tampil sekaligus di mode slider
 
 function susunGaleri() {
   grid.classList.toggle("slider", modeSlider);
   const vis = [...grid.querySelectorAll("figure:not(.hidden)")];
   const n = vis.length;
-  jumlahTampil = n;
 
   if (!modeSlider) {
-    // Mode grid: bersihkan gaya slider, kembalikan rasio asli
+    // Mode grid (filter kategori): tampilan masonry seperti semula
+    jumlahHalaman = 0;
     vis.forEach(f => {
-      f.style.transform = f.style.opacity = f.style.zIndex = f.style.pointerEvents = "";
+      f.style.display = "";
       f.style.aspectRatio = f.dataset.rasio;
-      f.onclick = null;
     });
     hide(prevBtn); hide(nextBtn);
     return;
   }
 
-  // Mode slider
+  // Mode slider: 3 foto per halaman
   if (!n) return;
-  if (idx >= n) idx = 0;
+  jumlahHalaman = Math.ceil(n / PER_HALAMAN);
+  if (idx >= jumlahHalaman) idx = 0;
+  // Halaman terakhir diisi mundur supaya tetap menampilkan 3 foto
+  let mulai = idx * PER_HALAMAN;
+  if (mulai + PER_HALAMAN > n) mulai = Math.max(0, n - PER_HALAMAN);
   vis.forEach((f, i) => {
-    f.style.aspectRatio = "auto";
-    let off = i - idx;
-    if (off > n / 2) off -= n;
-    if (off < -n / 2) off += n;
-    const a = Math.abs(off);
-    f.style.transform = `translate(-50%,-50%) translateX(${off * 62}%) scale(${1 - a * 0.2})`;
-    f.style.opacity = a > 2 ? 0 : 1 - a * 0.3;
-    f.style.zIndex = 10 - a;
-    f.style.pointerEvents = a > 2 ? "none" : "auto";
-    f.onclick = () => { idx = i; susunGaleri(); };
+    f.style.aspectRatio = f.dataset.rasio;
+    f.style.display = (i >= mulai && i < mulai + PER_HALAMAN) ? "" : "none";
   });
-  const tampilTombol = n >= 2 ? "" : "none";
+  const tampilTombol = jumlahHalaman >= 2 ? "" : "none";
   prevBtn.style.display = tampilTombol;
   nextBtn.style.display = tampilTombol;
 }
 
 function geser(arah) {
-  if (!modeSlider || jumlahTampil < 2) return;
-  idx = (idx + arah + jumlahTampil) % jumlahTampil;
+  if (!modeSlider || jumlahHalaman < 2) return;
+  idx = (idx + arah + jumlahHalaman) % jumlahHalaman;
   susunGaleri();
 }
 prevBtn.addEventListener("click", () => geser(-1));
