@@ -25,12 +25,48 @@ const GALERI_KATEGORI = [
 ];
 
 const GALERI = [
-  { no: 8,  src: "assets/galeri/foto-8.jpg",   alt: "Nail art",   rasio: "4/5", kategori: "nail" },
-  { no: 9,  src: "assets/galeri/press-on-1.jpg", alt: "Press-on",   rasio: "4/5", kategori: "presson" },
-  { no: 10, src: "assets/galeri/foto-10.jpg", alt: "Eyelash",    rasio: "4/5", kategori: "lash" },
-  { no: 11, src: "assets/galeri/foto-11.jpg", alt: "Nail art",   rasio: "4/5", kategori: "nail" },
-  { no: 12, src: "assets/galeri/press-on-2.jpg", alt: "Press-on",   rasio: "4/5", kategori: "presson" },
-  { no: 13, src: "assets/galeri/foto-13.jpg", alt: "Eyelash",    rasio: "4/5", kategori: "lash" },
-  { no: 14, src: "assets/galeri/foto-14.jpg", alt: "Nail art",   rasio: "4/5", kategori: "nail" },
-  { no: 15, src: "assets/galeri/press-on-3.jpg", alt: "Press-on",   rasio: "4/5", kategori: "presson" }
+  { no: 1,  src: "assets/galeri/nailart-1.jpg",     alt: "Nail art", rasio: "4/5", kategori: "nail"    },
+  { no: 2,  src: "assets/galeri/press-on-1.jpg",    alt: "Press-on", rasio: "4/5", kategori: "presson" },
+  { no: 3,  src: "assets/galeri/eyelash-1.jpg",     alt: "Eyelash",  rasio: "4/5", kategori: "lash"    },
+
+  { no: 4,  src: "assets/galeri/nailart-2.jpg",     alt: "Nail art", rasio: "4/5", kategori: "nail"    },
+  { no: 5,  src: "assets/galeri/press-on-2.jpg",    alt: "Press-on", rasio: "4/5", kategori: "presson" },
+  { no: 6,  src: "assets/galeri/eyelash-2.jpg",     alt: "Eyelash",  rasio: "4/5", kategori: "lash"    },
+
+  { no: 7,  src: "assets/galeri/nailart-3.jpg",     alt: "Nail art", rasio: "4/5", kategori: "nail"    },
+  { no: 8,  src: "assets/galeri/press-on-3.jpg",    alt: "Press-on", rasio: "4/5", kategori: "presson" },
+  { no: 9,  src: "assets/galeri/eyelash-3.jpeg",    alt: "Eyelash",  rasio: "4/5", kategori: "lash"    },
+
+  { no: 10, src: "assets/galeri/nailart-4.jpeg",    alt: "Nail art", rasio: "4/5", kategori: "nail"    },
+  { no: 11, src: "assets/galeri/press-on-4.jpg",    alt: "Press-on", rasio: "4/5", kategori: "presson" },
+  { no: 12, src: "assets/galeri/eyelash-4.jpeg",    alt: "Eyelash",  rasio: "4/5", kategori: "lash"    },
+
+  { no: 13, src: "assets/galeri/nailart-5.jpeg",     alt: "Nail art", rasio: "4/5", kategori: "nail"    },
+  { no: 14, src: "assets/galeri/press-on-5.jpeg",   alt: "Press-on", rasio: "4/5", kategori: "presson" },
+  { no: 15, src: "assets/galeri/eyelash-5.jpeg",    alt: "Eyelash",  rasio: "4/5", kategori: "lash"    },
+
+  { no: 16, src: "assets/galeri/nailart-6.jpeg",     alt: "Nail art", rasio: "4/5", kategori: "nail"    },
+  { no: 17, src: "assets/galeri/press-on-6.jpeg",   alt: "Press-on", rasio: "4/5", kategori: "presson" },
+  { no: 18, src: "assets/galeri/eyelash-6.jpg",     alt: "Eyelash",  rasio: "4/5", kategori: "lash"    },
+
+  { no: 19, src: "assets/galeri/nailart-7.jpeg",     alt: "Nail art", rasio: "4/5", kategori: "nail"    },
+  { no: 20, src: "assets/galeri/press-on-7.jpeg",   alt: "Press-on", rasio: "4/5", kategori: "presson" },
+  { no: 21, src: "assets/galeri/eyelash-7.jpeg",     alt: "Eyelash",  rasio: "4/5", kategori: "lash"    },
+
+  { no: 22, src: "assets/galeri/nailart-8.jpeg",     alt: "Nail art", rasio: "4/5", kategori: "nail"    },
+  { no: 23, src: "assets/galeri/press-on-8.jpeg",   alt: "Press-on", rasio: "4/5", kategori: "presson" },
+  { no: 24, src: "assets/galeri/eyelash-8.jpeg",     alt: "Eyelash",  rasio: "4/5", kategori: "lash"    },
+
+  { no: 25, src: "assets/galeri/nailart-9.jpeg",     alt: "Nail art", rasio: "4/5", kategori: "nail"    },
+  { no: 26, src: "assets/galeri/press-on-9.jpeg",   alt: "Press-on", rasio: "4/5", kategori: "presson" },
+  { no: 27, src: "assets/galeri/eyelash-9.jpeg",     alt: "Eyelash",  rasio: "4/5", kategori: "lash"    },
+
+  { no: 28, src: "assets/galeri/nailart-10.jpeg",    alt: "Nail art", rasio: "4/5", kategori: "nail"    },
+  { no: 29, src: "assets/galeri/press-on-10.jpeg",  alt: "Press-on", rasio: "4/5", kategori: "presson" },
+
+  { no: 31, src: "assets/galeri/nailart-11.jpeg",    alt: "Nail art", rasio: "4/5", kategori: "nail"    },
+  { no: 32, src: "assets/galeri/press-on-11.jpeg",  alt: "Press-on", rasio: "4/5", kategori: "presson" },
+
+  { no: 34, src: "assets/galeri/nailart-12.jpeg",    alt: "Nail art", rasio: "4/5", kategori: "nail"    },
+  { no: 35, src: "assets/galeri/press-on-12.jpeg",  alt: "Press-on", rasio: "4/5", kategori: "presson" },
 ];

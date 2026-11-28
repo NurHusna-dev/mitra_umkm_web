@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking | EM Beauty Home Studio</title>
+<meta name="description" content="Booking nail art dan eyelash extension di EM Beauty Home Studio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500&family=Bodoni+Moda:ital,wght@0,500;1,500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+<link rel="stylesheet" href="assets/icons/tabler/tabler-icons-em.css">
+<style>
+  :root{
+    --bg:#0f0d0c; --card:#171310; --line:#3a302a; --line2:#4a3d33; --line3:#2a2420;
+    --text:#efe4d8; --muted:#a8998b; --muted2:#8f8173;
+    --tan:#d9b393; --btn:#d4a98a; --btn-text:#2a1a10;
+    --ok:#9fcf8f; --wa:#7fd17a; --red:#c98a8a; --err:#f09595;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Archivo',system-ui,sans-serif;font-size:14px;line-height:1.55}
+  a{color:inherit}
+  .serif{font-family:'Bodoni Moda',Georgia,serif;font-weight:400;letter-spacing:.5px}
+  .tan{color:var(--tan)} .mut{color:var(--muted)}
+  header{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto;padding:20px 24px;border-bottom:.5px solid var(--line3)}
+  header .logo{font-size:24px;text-decoration:none}
+  header .back{font-size:13px;color:var(--muted);text-decoration:none;display:flex;gap:6px;align-items:center}
+  main{padding:32px 16px 64px}
+  .card{background:var(--card);border:.5px solid var(--line);border-radius:18px;padding:24px;max-width:580px;margin:0 auto}
+  h1{font-size:28px;margin:0 0 4px}
+  .lb{display:block;font-size:11px;letter-spacing:1.5px;color:var(--muted);margin:18px 0 6px;text-transform:uppercase}
+  .row{display:flex;justify-content:space-between;gap:8px}
+  .tabs{display:grid;grid-template-columns:repeat(3,1fr);background:var(--bg);border:.5px solid var(--line2);border-radius:999px;padding:4px}
+  .tab{all:unset;text-align:center;padding:9px;border-radius:999px;cursor:pointer;letter-spacing:1px;font-size:12px}
+  .tab.on{background:var(--btn);color:var(--btn-text);font-weight:500}
+  .sel{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;gap:10px;background:var(--bg);border:.5px solid var(--line2);border-radius:10px;padding:11px 12px;cursor:pointer}
+  .dd.open .sel{border-color:var(--btn)}
+  .sel .tx{flex:1;min-width:0}
+  .ls,.calbox{display:none;margin-top:4px}
+  .ls{background:var(--bg);border:.5px solid var(--line2);border-radius:8px;overflow:hidden}
+  .dd.open .ls,.dd.open .calbox{display:block}
+  .gh{font-size:10px;letter-spacing:1.5px;color:var(--muted2);padding:9px 12px 3px;border-top:.5px solid var(--line3)}
+  .gh:first-child{border-top:none}
+  .op{display:flex;gap:10px;padding:8px 12px;cursor:pointer}
+  .op:hover{background:#2a211b}
+  .op.on{background:var(--btn);color:var(--btn-text)}
+  .op small{margin-left:auto;font-size:12px;opacity:.8}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .ch{border:.5px solid var(--line2);border-radius:10px;padding:6px 10px;cursor:pointer;text-align:center;min-width:60px}
+  .ch.on{background:var(--btn);color:var(--btn-text);border-color:var(--btn)}
+  .ch.off{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+  .ch small{display:block;font-size:10px;opacity:.8}
+  .ico{width:32px;height:32px;border-radius:8px;background:#2a211b;display:flex;align-items:center;justify-content:center;color:var(--tan);flex-shrink:0;font-size:18px}
+  .cal{background:var(--bg);border:.5px solid var(--line2);border-radius:12px;padding:12px}
+  .cg{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center}
+  .wd{font-size:10px;color:var(--muted2);letter-spacing:1px;padding:4px 0}
+  .dc{border:.5px solid var(--line);border-radius:8px;padding:6px 0 4px;cursor:pointer;min-height:42px}
+  .dc:hover{border-color:var(--btn)}
+  .dc small{display:block;font-size:9px;line-height:1.1;color:var(--muted2)}
+  .dc small.ok{color:var(--ok)}
+  .dc.on{background:var(--btn);color:var(--btn-text);border-color:var(--btn)}
+  .dc.on small{color:var(--btn-text)}
+  .dc.past{opacity:.25;cursor:not-allowed;border-color:transparent}
+  .dc.tutup{background:#2a1515;border-color:#4a2525;color:var(--red)}
+  .dc.tutup small{color:var(--red)}
+  .nav{background:transparent;border:.5px solid var(--line2);color:var(--text);border-radius:50%;width:30px;height:30px;cursor:pointer}
+  .tsec{border-top:.5px solid var(--line3);margin-top:12px;padding-top:10px}
+  .box{border:.5px solid var(--line);border-radius:12px;padding:14px;margin-top:14px}
+  .pay{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+  .po{border:.5px solid var(--line2);border-radius:10px;padding:10px;cursor:pointer;display:flex;gap:8px}
+  .po.on{border:1.5px solid var(--btn);background:#241c16}
+  .po.off{opacity:.4;cursor:not-allowed}
+  .rd{width:16px;height:16px;border-radius:50%;border:1.5px solid #5a4a3e;flex-shrink:0;margin-top:2px}
+  .po.on .rd{border:5px solid var(--btn)}
+  .up{border:1px dashed #5a4a3e;border-radius:12px;padding:16px;text-align:center;cursor:pointer;display:block}
+  .up:hover{border-color:var(--btn)}
+  .wa{all:unset;box-sizing:border-box;width:100%;display:flex;gap:12px;align-items:center;background:#1d2a1b;border:.5px solid #3f6b3a;border-radius:12px;padding:12px;margin-top:10px;cursor:pointer}
+  .wa:hover{border-color:var(--wa)}
+  .wa .bub{width:40px;height:40px;border-radius:50%;background:var(--wa);color:#10260e;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px}
+  .btn{width:100%;background:var(--btn);color:var(--btn-text);border:none;border-radius:999px;padding:13px;font-weight:500;cursor:pointer;font-size:13px;letter-spacing:1px;margin-top:16px;font-family:inherit}
+  .ghost{width:100%;margin-top:12px;background:transparent;color:var(--text);border:.5px solid #5a4a3e;border-radius:999px;padding:10px;cursor:pointer;font-family:inherit}
+  .err{color:var(--err);font-size:12px;margin:6px 0 0;min-height:0}
+  .closed{border:.5px dashed #4a2525;background:#1f1212;border-radius:10px;padding:10px 12px;color:var(--red)}
+  .qr{background:#fff;padding:8px;border-radius:10px;width:120px;flex-shrink:0}
+  .qr img{width:100%;display:block}
+  .copy{all:unset;cursor:pointer;color:var(--tan);font-size:12px}
+  /* --- dropdown layanan dengan pilihan --- */
+  .it{display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;border-top:.5px solid #1c1714}
+  .it:hover{background:#221b16}
+  .it.on{background:var(--btn);color:var(--btn-text)}
+  .it .nm{flex:1;min-width:0}
+  .it .pr,.so .pr{font-size:12px;color:var(--muted);white-space:nowrap}
+  .it.on .pr{color:var(--btn-text)}
+  .it .ar{width:22px;height:22px;border-radius:50%;border:.5px solid var(--line2);display:flex;align-items:center;justify-content:center;color:var(--tan);flex-shrink:0;transition:transform .15s}
+  .it.exp .ar{transform:rotate(90deg);background:#2a211b}
+  .sub{display:none;background:#14100d;border-left:2px solid var(--btn);margin-left:12px}
+  .it.exp+.sub{display:block}
+  .so{display:flex;gap:10px;align-items:center;padding:8px 12px;cursor:pointer}
+  .so:hover{background:#221b16}
+  .so .pr{margin-left:auto}
+  .so.on{background:var(--btn);color:var(--btn-text)}
+  .so.on .pr{color:var(--btn-text)}
+  .so .dot{width:12px;height:12px;border-radius:50%;border:1.5px solid #5a4a3e;flex-shrink:0}
+  .so.on .dot{border:4px solid var(--btn-text)}
+  .chosen{border:.5px solid var(--line);border-radius:10px;margin-top:8px}
+  .cr{display:flex;align-items:center;gap:8px;padding:9px 12px;border-top:.5px solid var(--line3)}
+  .cr:first-child{border-top:none}
+  .cr .nm{flex:1;min-width:0}
+  .cr .amt{min-width:74px;text-align:right}
+  .step{display:flex;align-items:center;border:.5px solid var(--line2);border-radius:999px}
+  .step button{background:none;border:none;color:var(--text);width:28px;height:28px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .step span{min-width:22px;text-align:center;font-size:12px}
+  .x{background:none;border:none;color:var(--muted2);cursor:pointer;font-size:16px;padding:4px}
+  .x:hover{color:var(--err)}
+  /* --- press-on --- */
+  .thumbs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .thumbs img{width:56px;height:56px;object-fit:cover;border-radius:8px;border:.5px solid var(--line2)}
+  .note{background:#241c16;border-radius:10px;padding:10px 12px;font-size:12px;color:#cfc3b6;margin-top:14px}
+  .field{width:100%;background:var(--bg);border:.5px solid var(--line2);border-radius:10px;padding:10px 12px;color:var(--text);font:inherit;resize:vertical}
+  .field:focus{outline:none;border-color:var(--btn)}
+  .sztab{width:100%;border-collapse:collapse;margin-top:12px;table-layout:fixed;font-size:14px}
+  .sztab th{font-weight:400;font-size:11px;color:var(--muted2);padding:6px 2px;text-align:center}
+  .sztab th:first-child,.sztab td:first-child{text-align:left;padding-left:8px;width:60px}
+  .sztab td{text-align:center;padding:9px 2px;border-top:.5px solid var(--line3);cursor:pointer}
+  .sztab td:first-child{font-family:'Bodoni Moda',Georgia,serif;font-size:16px;color:var(--tan)}
+  .sztab tr:hover td{background:#1f1915}
+  .sztab tr.on td{background:var(--btn);color:var(--btn-text)}
+  .guide{background:#f4efe9;color:#2a1a10;border-radius:14px;padding:14px;margin-top:12px}
+  .guide .ex{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .guide figure{margin:0;text-align:center}
+  .guide svg{width:100%;height:auto;display:block;border-radius:10px}
+  .guide figcaption{font-size:12px;margin-top:5px;color:#4a3a2e}
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:12px}
+  .rule{display:flex;gap:6px;font-size:12px;color:#4a3a2e}
+  .rule i{color:#3B6D11;font-size:15px;flex-shrink:0}
+  .rule.no i{color:#A32D2D}
+  .slots{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .slot{border:1px dashed #5a4a3e;border-radius:12px;min-height:140px;position:relative;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px}
+  .slot:hover{border-color:var(--btn)}
+  .slot .pv{display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .slot.done{border:1px solid #3f6b3a}
+  .slot.done .pv{display:block}
+  .slot .tag{display:none;position:absolute;left:6px;right:6px;bottom:6px;background:#0f0d0ccc;border-radius:6px;padding:3px 6px;font-size:11px;color:var(--wa);text-align:left}
+  .slot.done .tag{display:block}
+  .btn.green{background:var(--wa);color:#10260e}
+  .okmsg{color:var(--wa);font-size:12px;margin:8px 0 0;text-align:center}
+  @media (max-width:480px){.card{padding:18px}.pay{grid-template-columns:1fr}.rules{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo"><img src="assets/icons/logo.svg" alt="EM Beauty Home Studio" style="height:40px;width:auto;display:block"></a>
+  <a href="index.html" class="back"><i class="ti ti-arrow-left"></i> Kembali ke beranda</a>
+</header>
+
+<main>
+  <div class="card" id="form">
+    <h1 class="serif">Booking <i class="tan">EM Beauty</i></h1>
+    <p class="mut" style="margin:0">Pilih treatment, jadwal, lalu bayar untuk mengunci slot.</p>
+
+    <span class="lb">Kategori</span>
+    <div class="tabs" id="tabs">
+      <button class="tab on" data-c="nail">NAIL ART</button>
+      <button class="tab" data-c="lash">EYELASH</button>
+      <button class="tab" data-c="presson">PRESS-ON</button>
+    </div>
+
+    <!-- ===== NAIL ART & EYELASH ===== -->
+    <div id="svc">
+    <span class="lb" id="tLb">Pilihan nail art</span>
+    <div class="dd" id="dT">
+      <button class="sel" type="button"><i class="ti ti-sparkles tan"></i><span class="tx"></span><i class="ti ti-chevron-down"></i></button>
+      <div class="ls"></div>
+    </div>
+
+    <div id="mainQty"></div>
+
+    <span class="lb" id="aLb">Desain tambahan (opsional)</span>
+    <div class="dd" id="dA">
+      <button class="sel" type="button"><i class="ti ti-plus tan"></i><span class="tx mut" id="aTx">Tambah desain</span><i class="ti ti-chevron-down"></i></button>
+      <div class="ls"></div>
+    </div>
+    <div id="chosen"></div>
+    <div class="note" id="aNote" style="margin-top:8px"></div>
+
+    <span class="lb">Tanggal dan jam booking</span>
+    <div class="dd" id="dD">
+      <button class="sel" type="button" id="dSel"><span class="ico"><i class="ti ti-calendar-time"></i></span><span class="tx" id="dTxt"></span><i class="ti ti-chevron-down"></i></button>
+      <div class="calbox"><div class="cal">
+        <div class="row" style="align-items:center;margin-bottom:8px">
+          <button class="nav" id="prev" type="button" aria-label="Bulan sebelumnya"><i class="ti ti-chevron-left"></i></button>
+          <span class="serif" id="mon" style="font-size:16px"></span>
+          <button class="nav" id="next" type="button" aria-label="Bulan berikutnya"><i class="ti ti-chevron-right"></i></button>
+        </div>
+        <div class="cg" id="cal"></div>
+        <div class="tsec" id="times"></div>
+      </div></div>
+    </div>
+
+    <span class="lb">Metode pembayaran</span>
+    <div class="dd" id="dM">
+      <button class="sel" type="button"><i class="ti ti-qrcode tan" id="mIco"></i><span class="tx"></span><i class="ti ti-chevron-down"></i></button>
+      <div class="ls"></div>
+    </div>
+    <div class="box" id="det"></div>
+
+    <div class="box">
+      <div class="row"><span class="mut">Treatment</span><span id="sT" style="text-align:right"></span></div>
+      <div id="sAdd"></div>
+      <div class="row"><span class="mut">Jadwal</span><span id="sJ"></span></div>
+      <div class="row"><span class="mut">Total treatment</span><span id="sH"></span></div>
+      <span class="lb" style="margin-top:12px">Pilih pembayaran</span>
+      <div class="pay" id="pay">
+        <div class="po" data-p="dp"><span class="rd"></span><div><div style="font-weight:500">DP dulu</div><div class="mut" style="font-size:12px">Kunci slot · <span class="tan" id="dpP"></span></div></div></div>
+        <div class="po" data-p="full"><span class="rd"></span><div><div style="font-weight:500">Bayar lunas</div><div class="mut" style="font-size:12px">Bayar semua · <span class="tan" id="fullP"></span></div></div></div>
+      </div>
+      <p class="mut" id="dpNote" style="font-size:12px;margin:-4px 0 8px;display:none"></p>
+      <div class="row" id="sSisaR"><span class="mut">Sisa dibayar di studio</span><span id="sS"></span></div>
+      <div class="row" style="border-top:.5px solid var(--line);margin-top:8px;padding-top:8px"><span>Bayar sekarang</span><span class="tan" style="font-weight:500;font-size:17px" id="sB"></span></div>
+    </div>
+
+    <span class="lb">Bukti pembayaran</span>
+    <label class="up"><input type="file" accept="image/*" id="file" hidden><div id="upIn"></div></label>
+    <p class="err" id="upErr"></p>
+
+    <button class="wa" type="button" id="wa">
+      <span class="bub"><i class="ti ti-brand-whatsapp"></i></span>
+      <span style="flex:1"><span style="display:block;font-weight:500">Chat admin via WhatsApp</span><span class="mut" style="font-size:12px">Kirim bukti atau tanya kalau ada yang kurang. Pesan sudah terisi otomatis.</span></span>
+      <i class="ti ti-external-link" style="color:var(--wa)"></i>
+    </button>
+
+    <button class="btn" type="button" id="paid">KONFIRMASI BOOKING</button>
+    <p class="err" id="formErr" style="text-align:center"></p>
+    </div>
+
+    <!-- ===== PRESS-ON: kirim referensi dulu, bayar setelah admin memberi harga ===== -->
+    <div id="po" hidden>
+      <div class="note"><i class="ti ti-info-circle tan"></i> Press-on dibuat sesuai pesanan. Kirim referensi dan ukuran dulu, admin akan membalas harga dan estimasi selesai lewat WhatsApp. Belum perlu bayar di langkah ini.</div>
+
+      <span class="lb">1. Referensi desain (maks. 3 gambar)</span>
+      <label class="up"><input type="file" accept="image/*" multiple id="poRef" hidden>
+        <i class="ti ti-photo-plus tan" style="font-size:26px"></i>
+        <div style="margin-top:4px">Upload foto referensi desain</div>
+        <div class="mut" style="font-size:12px">Screenshot dari Pinterest, IG, atau foto kuku impian</div>
+      </label>
+      <div class="thumbs" id="poTh"></div>
+
+      <span class="lb">2. Bentuk kuku</span>
+      <div class="chips" id="poBentuk"><div class="ch on">Almond</div><div class="ch">Coffin</div><div class="ch">Square</div><div class="ch">Oval</div><div class="ch">Stiletto</div></div>
+      <span class="lb">Panjang</span>
+      <div class="chips" id="poPanjang"><div class="ch">Short</div><div class="ch on">Medium</div><div class="ch">Long</div></div>
+
+      <span class="lb">3. Ukuran kuku</span>
+      <div class="pay" id="poMode" style="margin:0">
+        <div class="po on" data-m="tahu"><span class="rd"></span><div><div style="font-weight:500">Sudah tahu ukuran</div><div class="mut" style="font-size:12px">Pilih XS sampai XL</div></div></div>
+        <div class="po" data-m="koin"><span class="rd"></span><div><div style="font-weight:500">Belum tahu ukuran</div><div class="mut" style="font-size:12px">Kirim foto kuku dengan koin</div></div></div>
+      </div>
+      <div id="poTahu">
+        <table class="sztab">
+          <thead><tr><th>Ukuran</th><th>Jempol</th><th>Telunjuk</th><th>Tengah</th><th>Manis</th><th>Kelingking</th></tr></thead>
+          <tbody id="poSzBody"></tbody>
+        </table>
+        <p class="mut" id="poPick" style="font-size:12px;margin:8px 0 0"></p>
+      </div>
+      <div id="poKoin" hidden>
+        <div class="guide">
+          <p class="serif" style="font-size:17px;margin:0;text-align:center">Cara ukur kuku dengan koin</p>
+          <p style="margin:4px 0 0;font-size:12px;text-align:center;color:#4a3a2e">Taruh koin Rp500 atau Rp1.000 di samping kuku. Foto dari atas dan jangan miring.</p>
+          <div class="ex">
+            <figure>
+              <svg viewBox="0 0 200 170" role="img" aria-label="Contoh foto 4 jari dengan koin"><rect width="200" height="170" fill="#e4ded8"/><circle cx="38" cy="62" r="24" fill="#c9c6c0" stroke="#a9a59e" stroke-width="2"/><circle cx="38" cy="62" r="18" fill="none" stroke="#b3afa8"/><text x="38" y="67" text-anchor="middle" font-size="13" font-family="Georgia" fill="#7a766f">500</text><g fill="#e9b9a0" stroke="#d29e84"><rect x="72" y="58" width="26" height="120" rx="13"/><rect x="101" y="40" width="27" height="140" rx="13.5"/><rect x="131" y="48" width="26" height="130" rx="13"/><rect x="160" y="72" width="23" height="110" rx="11.5"/></g><g fill="#f3d6d6" stroke="#e0b7b5"><rect x="77" y="63" width="16" height="20" rx="8"/><rect x="106" y="45" width="17" height="22" rx="8.5"/><rect x="136" y="53" width="16" height="21" rx="8"/><rect x="164" y="77" width="15" height="18" rx="7.5"/></g></svg>
+              <figcaption><b>Foto 1</b><br>4 jari (telunjuk, tengah, manis, kelingking)</figcaption>
+            </figure>
+            <figure>
+              <svg viewBox="0 0 200 170" role="img" aria-label="Contoh foto jempol dengan koin"><rect width="200" height="170" fill="#e4ded8"/><circle cx="62" cy="62" r="24" fill="#c9c6c0" stroke="#a9a59e" stroke-width="2"/><circle cx="62" cy="62" r="18" fill="none" stroke="#b3afa8"/><text x="62" y="67" text-anchor="middle" font-size="13" font-family="Georgia" fill="#7a766f">500</text><rect x="104" y="46" width="38" height="134" rx="19" fill="#e9b9a0" stroke="#d29e84"/><rect x="111" y="52" width="24" height="28" rx="12" fill="#f3d6d6" stroke="#e0b7b5"/></svg>
+              <figcaption><b>Foto 2</b><br>Jempol</figcaption>
+            </figure>
+          </div>
+          <div class="rules">
+            <div class="rule"><i class="ti ti-circle-check"></i>Tangan dan koin rata di meja</div>
+            <div class="rule"><i class="ti ti-circle-check"></i>Cahaya terang, foto tidak blur</div>
+            <div class="rule no"><i class="ti ti-circle-x"></i>Jangan foto dari samping atau miring</div>
+            <div class="rule no"><i class="ti ti-circle-x"></i>Lepas kuku palsu atau extension dulu</div>
+          </div>
+        </div>
+        <p class="mut" style="font-size:12px;margin:12px 0 0">Upload fotomu sesuai contoh di atas (tangan kanan):</p>
+        <div class="slots">
+          <label class="slot"><input type="file" accept="image/*" hidden data-k="1"><img class="pv" alt="Foto ukuran 1"><i class="ti ti-camera-plus tan" style="font-size:24px"></i><div style="margin-top:4px">Foto 1</div><div class="mut" style="font-size:11px">4 jari + koin</div><span class="tag"><i class="ti ti-circle-check"></i> Foto 1 siap · klik untuk ganti</span></label>
+          <label class="slot"><input type="file" accept="image/*" hidden data-k="2"><img class="pv" alt="Foto ukuran 2"><i class="ti ti-camera-plus tan" style="font-size:24px"></i><div style="margin-top:4px">Foto 2</div><div class="mut" style="font-size:11px">Jempol + koin</div><span class="tag"><i class="ti ti-circle-check"></i> Foto 2 siap · klik untuk ganti</span></label>
+        </div>
+        <div class="note">Admin akan mencocokkan fotomu dengan tabel ukuran XS sampai XL, lalu memberi tahu ukuranmu lewat WhatsApp.</div>
+      </div>
+
+      <span class="lb">4. Catatan (opsional)</span>
+      <textarea class="field" id="poNote" rows="2" placeholder="Warna lebih nude, tanpa charm di kelingking"></textarea>
+
+      <span class="lb">5. Pengambilan</span>
+      <div class="chips" id="poKirim"><div class="ch on" data-v="ambil">Ambil di studio</div><div class="ch" data-v="kirim">Kirim ke alamat<small>ongkir dihitung admin</small></div></div>
+      <textarea class="field" id="poAlamat" rows="2" hidden style="margin-top:8px" placeholder="Alamat lengkap pengiriman"></textarea>
+
+      <button class="btn green" type="button" id="poSend"><i class="ti ti-brand-whatsapp"></i> KIRIM REFERENSI KE WHATSAPP</button>
+      <p class="err" id="poErr" style="text-align:center"></p>
+      <p class="okmsg" id="poOk" hidden></p>
+    </div>
+  </div>
+
+  <div class="card" id="done" hidden></div>
+
+  <!-- ===== PRESS-ON: halaman bayar dari link admin (booking.html?po=...) ===== -->
+  <div class="card" id="poPay" hidden>
+    <h1 class="serif">Pembayaran <i class="tan">Press-On</i></h1>
+    <p class="mut" style="margin:0">Rincian ini sesuai penawaran admin di WhatsApp.</p>
+    <div class="box">
+      <div class="row"><span class="mut">Kode pesanan</span><span id="ppKode"></span></div>
+      <div class="row" id="ppDesainR"><span class="mut">Desain</span><span id="ppDesain" style="text-align:right"></span></div>
+      <div class="row" id="ppUkuranR"><span class="mut">Ukuran</span><span id="ppUkuran"></span></div>
+      <div class="row" id="ppEstR"><span class="mut">Estimasi selesai</span><span id="ppEst"></span></div>
+      <div class="row"><span class="mut">Harga press-on</span><span id="ppHarga"></span></div>
+      <div class="row" id="ppOngkirR"><span class="mut">Ongkir</span><span id="ppOngkir"></span></div>
+      <div class="row" style="border-top:.5px solid var(--line);margin-top:8px;padding-top:8px"><span>Total</span><span class="tan" style="font-weight:500" id="ppTotal"></span></div>
+    </div>
+    <span class="lb">Pilih pembayaran</span>
+    <div class="pay" id="ppPay" style="margin:0">
+      <div class="po on" data-p="dp"><span class="rd"></span><div><div style="font-weight:500">DP <span id="ppDpPct"></span>%</div><div class="mut" style="font-size:12px">Sisanya sebelum dikirim · <span class="tan" id="ppDpP"></span></div></div></div>
+      <div class="po" data-p="full"><span class="rd"></span><div><div style="font-weight:500">Bayar lunas</div><div class="mut" style="font-size:12px">Bayar semua · <span class="tan" id="ppFullP"></span></div></div></div>
+    </div>
+    <span class="lb">Metode pembayaran</span>
+    <div class="chips" id="ppM"><div class="ch on" data-m="qris">QRIS</div><div class="ch" data-m="bca">Transfer Bank BCA</div></div>
+    <div class="box" id="ppDet"></div>
+    <div class="box">
+      <div class="row" id="ppSisaR"><span class="mut">Sisa dibayar sebelum dikirim/diambil</span><span id="ppSisa"></span></div>
+      <div class="row"><span>Bayar sekarang</span><span class="tan" style="font-weight:500;font-size:17px" id="ppB"></span></div>
+    </div>
+    <span class="lb">Bukti pembayaran</span>
+    <label class="up"><input type="file" accept="image/*" id="ppFile" hidden><div id="ppUpIn"></div></label>
+    <button class="btn" type="button" id="ppGo">KONFIRMASI PEMBAYARAN</button>
+    <p class="err" id="ppErr" style="text-align:center"></p>
+  </div>
+</main>
+
+<script>
+/* =========================================================
+   PENGATURAN — ubah bagian ini sesuai kondisi studio
+   ========================================================= */
+const CONFIG = {
+  waNumber: '6282312855453',          // nomor WA admin, format 62xxx tanpa + dan tanpa 0 di depan
+  dp: 50000,                          // nominal DP
+  bca: { norek: '1234567890', atasNama: 'EM Beauty Studio' }, // GANTI dengan rekening asli
+  qrisImage: 'assets/qris.png',       // simpan gambar QRIS asli di folder assets dengan nama qris.png
+  jam: ['09.00','11.00','13.00','15.00'], // jam mulai treatment (studio buka 09.00-17.00 WIT)
+  hariTutup: [1],                     // 0=Minggu 1=Senin ... 6=Sabtu
+  tanggalLibur: ['2026-12-25','2027-01-01'], // libur khusus, format YYYY-MM-DD
+  // slot yang sudah terisi, format 'YYYY-MM-DD': ['jam', ...]. Isi 'semua' untuk menutup seharian
+  sudahDibooking: {
+    '2026-12-05': ['13.00','15.00'],
+    '2026-12-12': ['semua'],
+  },
+  bulanKeDepan: 2,                    // berapa bulan ke depan yang bisa dibooking
+  presson: { dpPersen: 50 },          // DP press-on dalam persen dari total (harga + ongkir)
+};
+
+/* ---------------------------------------------------------
+   DAFTAR LAYANAN DAN HARGA (dalam ribuan: 400 = Rp400.000)
+   Format satu layanan:
+     ['Nama', 70]                       → satu harga
+     ['Nama', null]                     → harga ditanyakan ke admin
+     ['Nama', [['Pilihan', 125], ...]]  → beberapa pilihan (muncul panah)
+     ['Pilihan', 5, 1]                  → angka 1 di belakang = harga per kuku
+   --------------------------------------------------------- */
+const PAKET = a => [['Kuku asli', a[0]], ['Kuku asli + builder', a[1]], ['Soft tip extension', a[2]], ['Half tip extension', a[3]]];
+const PER_KUKU = (...h) => h.map(p => [`Rp${p}.000 / kuku`, p, 1]);
+const SET = (reguler, fullset) => [['Reguler', reguler], ['Full set', fullset]];
+
+const LAYANAN = {
+  nail: {
+    main: [
+      ['PREMIUM', [
+        ['Akrilik Extension', 400],
+        ['Half Tip Extension', 200],
+      ]],
+      ['MENENGAH', [
+        ['Soft Tip Extension', 130],
+        ['Nail Gel Kaki', 90],
+        ['Nail Gel Tangan', 70],
+      ]],
+      ['PAKET NAIL · WARNA + DESAIN', [
+        ['Nail Ombre', PAKET([135, 175, 195, 265])],
+        ['Nail French', PAKET([125, 165, 185, 255])],
+        ['Nail Cat Eye', PAKET([110, 150, 170, 240])],
+        ['Nail Polos', PAKET([70, 110, 130, 200])],
+      ]],
+      ['BASIC', [
+        ['Russian Pedicure', 50],
+        ['Russian Manicure', 40],
+        ['Builder Gel / Overlay', [['10 kuku', 40], ['Per kuku', 5, 1]]],
+        ['Kuku Asli', [['10 kuku', 35], ['Per kuku', 5, 1]]],
+        ['Base Coat + Top Coat', 25],
+        ['Remove / Pembersih sisa nail', null],
+      ]],
+    ],
+    add: [
+      ['DESAIN PER 10 KUKU ATAU PER KUKU', [
+        ['Ombre / Gradasi', [['10 kuku', 65], ['Per kuku (simpel)', 5, 1], ['Per kuku (detail)', 8, 1]]],
+        ['French Nail', [['10 kuku', 55], ['Per kuku', 6, 1]]],
+        ['Chrome / Aurora / Glossy', [['10 kuku', 45], ['Per kuku', 6, 1]]],
+        ['Cat Eyes', [['10 kuku', 40], ['Per kuku', 5, 1]]],
+      ]],
+      ['DESAIN PER KUKU · SESUAI KESULITAN', [
+        ['Nail Art 3D', PER_KUKU(5, 10, 20, 30)],
+        ['3D Art', PER_KUKU(5, 10, 20, 25)],
+        ['Accessories (charm, foil, 3D chrome)', PER_KUKU(2, 5, 7, 10, 15, 20)],
+        ['Nail Art', PER_KUKU(2, 5, 10, 15)],
+        ['Marble', PER_KUKU(5, 10)],
+        ['Extension per kuku', PER_KUKU(5, 10)],
+        ['Blooming', PER_KUKU(3, 5)],
+      ]],
+      ['GRATIS', [
+        ['Stiker 2–4 kuku', 0],
+        ['Glitter 2–4 kuku', 0],
+      ]],
+    ],
+    addLabel: 'Desain tambahan (opsional)',
+    addButton: 'Tambah desain',
+    addNote: 'Harga desain per kuku tergantung tingkat kesulitan. Admin akan memastikan harga akhir dari referensi desainmu.',
+  },
+  lash: {
+    main: [
+      ['PREMIUM', [
+        ['Mix Volume Set', SET(350, 400)],
+        ['Manhua Lash', SET(350, 400)],
+        ['Medusa Lash', SET(320, 370)],
+      ]],
+      ['MENENGAH', [
+        ['Mega Volume 5D', SET(280, 325)],
+        ['Russian Lash 4D', SET(250, 300)],
+        ['Wispy Lash', SET(235, 280)],
+        ['Soft Wispy Spiky', SET(230, 300)],
+        ['Baby Lash 3D', SET(200, 250)],
+      ]],
+      ['BASIC', [
+        ['Natural Lash', SET(170, 200)],
+        ['Arabian Y Lash', SET(170, 200)],
+        ['Double U Lash', SET(170, 200)],
+      ]],
+    ],
+    add: [
+      ['TAMBAHAN SPIKE', [
+        ['Anime Manual', 100],
+        ['Spike Fairy', 100],
+        ['Spike Wispy', 80],
+        ['Anime Jadi', 50],
+      ]],
+    ],
+    addLabel: 'Tambahan spike (opsional)',
+    addButton: 'Tambah spike',
+    addNote: 'Spike ditambahkan ke set lash yang kamu pilih.',
+  },
+};
+/* ========================================================= */
+
+const $ = id => document.getElementById(id);
+const rp = n => 'Rp' + Math.round(n).toLocaleString('id-ID');
+const HARI = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+const BLN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+const now = new Date();
+const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+const key = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const sameD = (a, b) => a && b && a.getTime() === b.getTime();
+const isTutup = d => CONFIG.hariTutup.includes(d.getDay()) || CONFIG.tanggalLibur.includes(key(d));
+
+function slots(d) {
+  if (isTutup(d)) return [];
+  const booked = CONFIG.sudahDibooking[key(d)] || [];
+  const isToday = sameD(d, today);
+  return CONFIG.jam.map(h => {
+    const lewat = isToday && +h.slice(0, 2) <= now.getHours();
+    const penuh = booked.includes('semua') || booked.includes(h);
+    return { h, st: lewat ? 'lewat' : penuh ? 'penuh' : 'ok' };
+  });
+}
+
+/* --- state --- */
+const params = new URLSearchParams(location.search);
+const startCat = params.get('kategori') === 'lash' ? 'lash' : 'nail';
+const S = {
+  c: startCat,
+  main: null, add: [], d: null, h: null, pay: 'dp', m: 'qris', file: null,
+  vm: new Date(today.getFullYear(), today.getMonth(), 1),
+};
+const price = () => lineTot(S.main) + S.add.reduce((s, e) => s + lineTot(e), 0);
+const hargaBelumPasti = () => S.main.price == null;
+const sisaTxt = () => hargaBelumPasti() ? 'dihitung admin' : rp(price() - CONFIG.dp);
+const bayar = () => S.pay === 'dp' ? CONFIG.dp : price();
+const nama = () => [label(S.main), ...S.add.map(label)].join(' + ');
+const jadwal = () => S.d ? `${HARI[S.d.getDay()].slice(0,3)}, ${S.d.getDate()} ${BLN[S.d.getMonth()].slice(0,3)} ${S.d.getFullYear()}` + (S.h ? ` · ${S.h}` : '') : '-';
+
+/* --- dropdown umum --- */
+const closeAll = () => document.querySelectorAll('.dd').forEach(x => x.classList.remove('open'));
+document.addEventListener('click', e => { if (!e.target.closest('.dd')) closeAll(); });
+
+function dropdown(id, html, onPick) {
+  const d = $(id);
+  d.querySelector('.ls').innerHTML = html;
+  d.querySelector('.sel').onclick = () => { const o = d.classList.contains('open'); closeAll(); if (!o) d.classList.add('open'); };
+  d.querySelectorAll('.op').forEach(o => o.onclick = () => { onPick(o); d.classList.remove('open'); update(); });
+}
+
+/* --- daftar layanan: dropdown dengan pilihan yang bisa dibuka --- */
+const FLAT = {};
+for (const c in LAYANAN) {
+  const flat = groups => { const r = []; groups.forEach(([grup, list]) => list.forEach(([n, p]) => r.push({ grup, n, p }))); return r; };
+  FLAT[c] = { main: flat(LAYANAN[c].main), add: flat(LAYANAN[c].add) };
+}
+const rpK = n => n === 0 ? 'Gratis' : n == null ? 'Tanya admin' : rp(n * 1000);
+function makeEntry(it, j) {
+  const o = j == null ? null : it.p[j];
+  return { n: it.n, opt: o ? o[0] : null, price: o ? o[1] : it.p, perKuku: !!(o && o[2]), qty: o && o[2] ? 10 : 1, key: it.n + '|' + (o ? o[0] : '') };
+}
+const lineTot = e => e.price == null ? 0 : e.price * 1000 * (e.perKuku ? e.qty : 1);
+const label = e => e.n + (e.opt ? ` · ${e.opt}` : '') + (e.perKuku ? ` × ${e.qty} kuku` : '');
+function defaultMain(c, nameFromURL) {
+  const list = FLAT[c].main;
+  const it = list.find(i => i.n.toLowerCase() === (nameFromURL || '').toLowerCase()) || list[0];
+  return makeEntry(it, Array.isArray(it.p) ? 0 : null);
+}
+
+function accHTML(list) {
+  let last = '';
+  return list.map((it, i) => {
+    const head = it.grup !== last ? (last = it.grup, `<div class="gh">${it.grup}</div>`) : '';
+    if (!Array.isArray(it.p)) {
+      return head + `<div class="it" data-i="${i}" data-single="1"><span class="nm">${it.n}</span><span class="pr">${rpK(it.p)}</span></div>`;
+    }
+    const min = Math.min(...it.p.map(o => o[1]));
+    return head +
+      `<div class="it" data-i="${i}"><span class="nm">${it.n}</span>
+         <span class="pr">${it.p.length > 1 ? 'mulai ' : ''}${rpK(min)}${it.p.some(o => o[2]) ? ' / kuku' : ''}</span>
+         <span class="ar"><i class="ti ti-chevron-right"></i></span></div>
+       <div class="sub">${it.p.map((o, j) =>
+         `<div class="so" data-i="${i}" data-j="${j}"><span class="dot"></span><span>${o[0]}</span>
+            <span class="pr">${rpK(o[1])}${o[2] && !o[0].includes('/ kuku') ? ' / kuku' : ''}</span></div>`).join('')}</div>`;
+  }).join('');
+}
+function buildAcc(id, list, onPick) {
+  const d = $(id), ls = d.querySelector('.ls');
+  ls.innerHTML = accHTML(list);
+  d.querySelector('.sel').onclick = () => { const o = d.classList.contains('open'); closeAll(); if (!o) d.classList.add('open'); };
+  ls.querySelectorAll('.it').forEach(el => el.onclick = () => {
+    const it = list[+el.dataset.i];
+    if (el.dataset.single) { onPick(it, null); d.classList.remove('open'); update(); }
+    else el.classList.toggle('exp');
+  });
+  ls.querySelectorAll('.so').forEach(el => el.onclick = () => {
+    onPick(list[+el.dataset.i], +el.dataset.j); d.classList.remove('open'); update();
+  });
+}
+function buildLists() {
+  buildAcc('dT', FLAT[S.c].main, (it, j) => { S.main = makeEntry(it, j); });
+  buildAcc('dA', FLAT[S.c].add, (it, j) => {
+    const e = makeEntry(it, j);
+    if (!S.add.some(a => a.key === e.key)) S.add.push(e);
+  });
+}
+function markChosen(id, list, entries) {
+  const ls = $(id).querySelector('.ls');
+  ls.querySelectorAll('.it,.so').forEach(el => el.classList.remove('on'));
+  entries.forEach(e => {
+    const i = list.findIndex(it => it.n === e.n);
+    const el = ls.querySelector(`.it[data-i="${i}"]`);
+    if (!el) return;
+    if (el.dataset.single) { el.classList.add('on'); return; }
+    el.nextElementSibling.querySelectorAll('.so').forEach(s => {
+      if (list[i].p[+s.dataset.j][0] === e.opt) { s.classList.add('on'); if (id === 'dT') el.classList.add('exp'); }
+    });
+  });
+}
+function stepper(e) {
+  const wrap = document.createElement('div');
+  wrap.className = 'step';
+  wrap.innerHTML = `<button type="button" aria-label="Kurangi kuku"><i class="ti ti-minus"></i></button><span>${e.qty}</span><button type="button" aria-label="Tambah kuku"><i class="ti ti-plus"></i></button>`;
+  const [minus, plus] = wrap.querySelectorAll('button');
+  minus.onclick = () => { e.qty = Math.max(1, e.qty - 1); update(); };
+  plus.onclick = () => { e.qty = Math.min(10, e.qty + 1); update(); };
+  return wrap;
+}
+function drawService() {
+  const L = LAYANAN[S.c];
+  $('tLb').textContent = S.c === 'nail' ? 'Pilihan nail art' : 'Pilihan eyelash';
+  $('dT').querySelector('.tx').innerHTML = `${S.main.n}${S.main.opt ? ' · ' + S.main.opt : ''} <span class="tan" style="font-size:12px">· ${S.main.price == null ? 'Tanya admin' : rp(lineTot(S.main))}</span>`;
+  markChosen('dT', FLAT[S.c].main, [S.main]);
+  markChosen('dA', FLAT[S.c].add, S.add);
+
+  $('mainQty').innerHTML = '';
+  if (S.main.perKuku) {
+    $('mainQty').innerHTML = `<div class="chosen"><div class="cr"><span class="nm mut">Jumlah kuku</span><span class="q"></span><span class="tan amt">${rp(lineTot(S.main))}</span></div></div>`;
+    $('mainQty').querySelector('.q').appendChild(stepper(S.main));
+  }
+
+  $('aLb').textContent = L.addLabel;
+  $('aTx').textContent = L.addButton;
+  $('aNote').textContent = L.addNote;
+  $('chosen').innerHTML = S.add.length ? '<div class="chosen"></div>' : '';
+  S.add.forEach((e, i) => {
+    const r = document.createElement('div');
+    r.className = 'cr';
+    r.innerHTML = `<span class="nm">${e.n}${e.opt ? ` · ${e.opt}` : ''}${e.perKuku ? '<br><span class="mut" style="font-size:11px">jumlah kuku</span>' : ''}</span>
+      <span class="q"></span><span class="tan amt">${rpK(e.price == null ? null : lineTot(e) / 1000)}</span>
+      <button class="x" type="button" aria-label="Hapus ${e.n}"><i class="ti ti-x"></i></button>`;
+    if (e.perKuku) r.querySelector('.q').appendChild(stepper(e));
+    r.querySelector('.x').onclick = () => { S.add.splice(i, 1); update(); };
+    $('chosen').firstChild.appendChild(r);
+  });
+
+  $('sAdd').innerHTML = S.add.map(e => `<div class="row"><span class="mut">+ ${label(e)}</span><span>${rpK(lineTot(e) / 1000)}</span></div>`).join('');
+}
+
+$('tabs').querySelectorAll('.tab').forEach(t => {
+  t.classList.toggle('on', t.dataset.c === S.c);
+  t.onclick = () => {
+    $('tabs').querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === t));
+    const isPO = t.dataset.c === 'presson';
+    $('svc').hidden = isPO;
+    $('po').hidden = !isPO;
+    closeAll();
+    if (isPO) return;
+    S.c = t.dataset.c; S.main = defaultMain(S.c); S.add = [];
+    buildLists(); update();
+  };
+});
+
+dropdown('dM',
+  `<div class="op" data-m="qris">QRIS<small>semua bank dan e-wallet</small></div>
+   <div class="op" data-m="bca">Transfer Bank BCA</div>`,
+  o => { S.m = o.dataset.m; });
+
+/* --- kalender + jam --- */
+$('dSel').onclick = () => {
+  const d = $('dD'), o = d.classList.contains('open');
+  closeAll();
+  if (!o) { if (S.d) S.vm = new Date(S.d.getFullYear(), S.d.getMonth(), 1); drawCal(); drawTimes(); d.classList.add('open'); }
+};
+$('prev').onclick = () => {
+  const p = new Date(S.vm); p.setMonth(p.getMonth() - 1);
+  if (p >= new Date(today.getFullYear(), today.getMonth(), 1)) { S.vm = p; drawCal(); }
+};
+$('next').onclick = () => {
+  const p = new Date(S.vm); p.setMonth(p.getMonth() + 1);
+  if (p <= new Date(today.getFullYear(), today.getMonth() + CONFIG.bulanKeDepan, 1)) { S.vm = p; drawCal(); }
+};
+
+function drawCal() {
+  const y = S.vm.getFullYear(), m = S.vm.getMonth();
+  $('mon').textContent = `${BLN[m]} ${y}`;
+  let h = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'].map(w => `<div class="wd">${w}</div>`).join('');
+  const first = new Date(y, m, 1).getDay(), n = new Date(y, m + 1, 0).getDate();
+  for (let i = 0; i < first; i++) h += '<div></div>';
+  for (let d = 1; d <= n; d++) {
+    const x = new Date(y, m, d);
+    let cls = 'dc', info = '<small>&nbsp;</small>';
+    if (x < today) cls += ' past';
+    else if (isTutup(x)) { cls += ' tutup'; info = '<small>Tutup</small>'; }
+    else {
+      const k = slots(x).filter(s => s.st === 'ok').length;
+      info = k ? `<small class="ok">${k} slot</small>` : '<small>Penuh</small>';
+    }
+    if (sameD(x, S.d)) cls += ' on';
+    h += `<div class="${cls}" data-d="${d}">${d}${info}</div>`;
+  }
+  $('cal').innerHTML = h;
+  $('cal').querySelectorAll('.dc').forEach(e => e.onclick = () => {
+    if (e.classList.contains('past')) return;
+    S.d = new Date(y, m, +e.dataset.d); S.h = null;
+    drawCal(); drawTimes(); update(true);
+  });
+}
+
+function drawTimes() {
+  const t = $('times');
+  if (!S.d) { t.innerHTML = '<p class="mut" style="margin:0;font-size:12px"><i class="ti ti-pointer"></i> Klik tanggal untuk melihat jam yang tersedia.</p>'; return; }
+  const label = `${HARI[S.d.getDay()]}, ${S.d.getDate()} ${BLN[S.d.getMonth()]}`;
+  if (isTutup(S.d)) {
+    t.innerHTML = `<span class="lb" style="margin:0 0 6px">Jam tersedia · ${label}</span><div class="closed">Studio tutup di tanggal ini, tidak ada jadwal.</div>`;
+    return;
+  }
+  const sl = slots(S.d), k = sl.filter(s => s.st === 'ok').length;
+  t.innerHTML =
+    `<div class="row" style="margin-bottom:6px;align-items:baseline"><span class="lb" style="margin:0">Jam tersedia · ${label}</span>
+     <span style="font-size:11px;color:${k ? 'var(--ok)' : 'var(--red)'}">${k ? k + ' slot kosong' : 'penuh'}</span></div>
+     <div class="chips">` +
+    sl.map(s => `<div class="ch ${s.st !== 'ok' ? 'off' : ''} ${S.h === s.h ? 'on' : ''}" data-h="${s.h}">${s.h}<small>${s.st === 'ok' ? 'tersedia' : s.st}</small></div>`).join('') +
+    '</div>';
+  t.querySelectorAll('.ch').forEach(c => c.onclick = () => {
+    if (c.classList.contains('off')) return;
+    S.h = c.dataset.h; $('dD').classList.remove('open'); update();
+  });
+}
+
+/* --- pilihan DP / lunas --- */
+$('pay').querySelectorAll('.po').forEach(p => p.onclick = () => {
+  if (p.classList.contains('off')) return;
+  S.pay = p.dataset.p; update();
+});
+
+/* --- upload bukti --- */
+function drawUpload() {
+  $('upIn').innerHTML = S.file
+    ? `<div style="display:flex;gap:12px;align-items:center;text-align:left">
+         <img src="${S.file.url}" alt="Bukti pembayaran" style="width:60px;height:60px;object-fit:cover;border-radius:8px;border:.5px solid var(--line2)">
+         <div style="flex:1;min-width:0"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${S.file.name}</div>
+         <div style="font-size:12px;color:var(--wa)"><i class="ti ti-circle-check"></i> Bukti terunggah</div></div>
+         <span id="rm" class="mut" style="font-size:12px;cursor:pointer"><i class="ti ti-trash"></i> Hapus</span></div>`
+    : `<i class="ti ti-photo-up tan" style="font-size:26px"></i>
+       <div style="margin-top:4px">Upload screenshot bukti pembayaran</div>
+       <div class="mut" style="font-size:12px">JPG atau PNG, maks. 5 MB. Klik untuk pilih gambar.</div>`;
+  const rm = $('rm');
+  if (rm) rm.onclick = e => { e.preventDefault(); S.file = null; $('file').value = ''; drawUpload(); };
+}
+$('file').onchange = e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  if (!f.type.startsWith('image/')) { $('upErr').textContent = 'File harus berupa gambar.'; return; }
+  if (f.size > 5 * 1024 * 1024) { $('upErr').textContent = 'Ukuran gambar maksimal 5 MB.'; return; }
+  $('upErr').textContent = ''; $('formErr').textContent = '';
+  S.file = { name: f.name, url: URL.createObjectURL(f), raw: f };
+  drawUpload();
+};
+
+/* --- WhatsApp --- */
+function waMessage(kode) {
+  return `Halo EM Beauty, saya mau konfirmasi booking${kode ? ' ' + kode : ''}:\n` +
+    `• Treatment: ${label(S.main)}\n` +
+    S.add.map(e => `• Tambahan: ${label(e)}\n`).join('') +
+    `• Total treatment: ${hargaBelumPasti() ? 'dihitung admin' : rp(price())}\n` +
+    `• Jadwal: ${jadwal()}\n` +
+    `• Pembayaran: ${S.pay === 'dp' ? 'DP' : 'Lunas'} ${rp(bayar())} via ${S.m === 'qris' ? 'QRIS' : 'transfer BCA'}\n` +
+    (S.pay === 'dp' ? `• Sisa di studio: ${sisaTxt()}\n` : '') +
+    `Berikut bukti pembayarannya.`;
+}
+/* Kirim ke WhatsApp. Di HP yang mendukung, gambar ikut terkirim lewat menu share */
+async function shareWA(text, files) {
+  files = (files || []).filter(Boolean);
+  if (files.length && navigator.canShare && navigator.canShare({ files })) {
+    try { await navigator.share({ files, text }); return 'shared'; }
+    catch (e) { if (e.name === 'AbortError') return 'abort'; }
+  }
+  window.open(`https://wa.me/${CONFIG.waNumber}?text=${encodeURIComponent(text)}`, '_blank');
+  return 'link';
+}
+function openWA(kode) { return shareWA(waMessage(kode), S.file ? [S.file.raw] : []); }
+
+/* Rincian QRIS / BCA, dipakai form booking dan halaman bayar press-on */
+function payDetail(m, b) {
+  return m === 'qris'
+    ? `<div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+         <div class="qr"><img src="${CONFIG.qrisImage}" alt="QRIS EM Beauty" onerror="this.parentNode.innerHTML='<p style=&quot;color:#555;font-size:11px;margin:0;text-align:center&quot;>Gambar QRIS belum dipasang</p>'"></div>
+         <div style="flex:1;min-width:160px"><p style="margin:0 0 4px;font-weight:500">Scan QRIS</p>
+         <p class="mut" style="margin:0;font-size:12px">Scan pakai m-banking atau e-wallet, lalu bayar <span class="tan">${rp(b)}</span>.</p></div></div>`
+    : `<p style="margin:0 0 8px;font-weight:500">Transfer Bank BCA</p>
+       <div class="row" style="background:var(--bg);border-radius:8px;padding:10px 12px;align-items:center">
+         <div><div style="font-size:11px;color:var(--muted2)">No. rekening</div>
+         <div style="font-size:16px;letter-spacing:1px">${CONFIG.bca.norek.replace(/(\d{3})(\d{3})(\d+)/, '$1 $2 $3')}</div>
+         <div class="mut" style="font-size:12px">a.n. ${CONFIG.bca.atasNama}</div></div>
+         <button class="copy" type="button" data-copy="${CONFIG.bca.norek}"><i class="ti ti-copy"></i> Salin</button></div>
+       <p class="mut" style="margin:8px 0 0;font-size:12px">Transfer tepat <span class="tan">${rp(b)}</span>.</p>`;
+}
+function bindCopy(box) {
+  box.querySelectorAll('.copy').forEach(c => c.onclick = () =>
+    navigator.clipboard.writeText(c.dataset.copy).then(() => { c.innerHTML = '<i class="ti ti-check"></i> Tersalin'; }));
+}
+$('wa').onclick = () => openWA();
+
+/* --- render utama --- */
+function update(keepCal) {
+  drawService();
+
+  $('dTxt').innerHTML = !S.d ? '<span class="mut">Pilih tanggal dan jam</span>'
+    : isTutup(S.d) ? `${HARI[S.d.getDay()]}, ${S.d.getDate()} ${BLN[S.d.getMonth()]} <span style="color:var(--red);font-size:12px">· studio tutup</span>`
+    : `${HARI[S.d.getDay()]}, ${S.d.getDate()} ${BLN[S.d.getMonth()]} ${S.d.getFullYear()}` +
+      (S.h ? ` <span class="tan">· ${S.h}</span>` : ' <span class="mut" style="font-size:12px">· pilih jam</span>');
+  if (!keepCal) { drawCal(); drawTimes(); }
+
+  const belumPasti = hargaBelumPasti();
+  const murah = !belumPasti && price() <= CONFIG.dp;
+  if (murah) S.pay = 'full';
+  if (belumPasti) S.pay = 'dp';
+  $('pay').querySelectorAll('.po').forEach(p => {
+    p.classList.toggle('on', p.dataset.p === S.pay);
+    p.classList.toggle('off', (murah && p.dataset.p === 'dp') || (belumPasti && p.dataset.p === 'full'));
+  });
+  $('dpNote').style.display = murah || belumPasti ? 'block' : 'none';
+  $('dpNote').textContent = belumPasti
+    ? 'Harga layanan ini dikonfirmasi admin. Bayar DP dulu untuk kunci slot.'
+    : `Total treatment ${rp(CONFIG.dp)} ke bawah, jadi langsung bayar lunas.`;
+  $('dpP').textContent = rp(CONFIG.dp);
+  $('fullP').textContent = belumPasti ? 'Tanya admin' : rp(price());
+
+  $('dM').querySelector('.tx').textContent = S.m === 'qris' ? 'QRIS' : 'Transfer Bank BCA';
+  $('mIco').className = 'ti tan ti-' + (S.m === 'qris' ? 'qrcode' : 'building-bank');
+  $('dM').querySelectorAll('.op').forEach(o => o.classList.toggle('on', o.dataset.m === S.m));
+
+  const b = bayar();
+  $('det').innerHTML = payDetail(S.m, b);
+  bindCopy($('det'));
+
+  $('sT').textContent = label(S.main);
+  $('sJ').textContent = jadwal();
+  $('sH').textContent = belumPasti ? 'Tanya admin' : rp(price());
+  $('sSisaR').style.display = S.pay === 'dp' ? 'flex' : 'none';
+  $('sS').textContent = sisaTxt();
+  $('sB').textContent = rp(b);
+}
+
+/* --- konfirmasi --- */
+$('paid').onclick = () => {
+  let e = '';
+  if (!S.d || isTutup(S.d)) e = 'Pilih tanggal yang studio buka.';
+  else if (!S.h) e = 'Pilih jam booking dulu.';
+  else if (!S.file) { e = 'Upload bukti pembayaran dulu.'; $('upErr').textContent = e; }
+  $('formErr').textContent = e;
+  if (e) return;
+
+  const kode = 'EMB-' + key(S.d).slice(5).replace('-', '') + '-' + S.h.slice(0, 2);
+  $('form').hidden = true;
+  const d = $('done'); d.hidden = false;
+  d.innerHTML = `
+    <div style="text-align:center">
+      <div style="width:48px;height:48px;border-radius:50%;background:var(--btn);color:var(--btn-text);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:24px"><i class="ti ti-check"></i></div>
+      <h1 class="serif" style="font-size:24px">Booking <i class="tan">hampir selesai</i></h1>
+      <p class="mut" style="margin:0 0 16px">Kode ${kode}. Kirim bukti ke WhatsApp admin supaya slot kamu dikunci.</p>
+    </div>
+    <div class="box" style="margin:0">
+      <div class="row"><span class="mut">Treatment</span><span>${nama()}</span></div>
+      <div class="row"><span class="mut">Jadwal</span><span>${jadwal()}</span></div>
+      <div class="row"><span class="mut">${S.pay === 'dp' ? 'DP' : 'Lunas'} via ${S.m === 'qris' ? 'QRIS' : 'BCA'}</span><span>${rp(bayar())}</span></div>
+      ${S.pay === 'dp' ? `<div class="row"><span class="mut">Sisa di studio</span><span>${sisaTxt()}</span></div>` : ''}
+    </div>
+    <button class="wa" type="button" id="wa2" style="margin-top:14px">
+      <span class="bub"><i class="ti ti-brand-whatsapp"></i></span>
+      <span style="flex:1"><span style="display:block;font-weight:500">Kirim bukti ke WhatsApp</span><span class="mut" style="font-size:12px">Lampirkan screenshot ${S.file.name} di chat.</span></span>
+      <i class="ti ti-external-link" style="color:var(--wa)"></i>
+    </button>
+    <button class="ghost" type="button" id="back">Ubah booking</button>`;
+  $('wa2').onclick = () => openWA(kode);
+  $('back').onclick = () => { d.hidden = true; $('form').hidden = false; };
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+
+/* =========================================================
+   PRESS-ON
+   Langkah 1: pelanggan kirim referensi + ukuran ke WA (belum bayar)
+   Langkah 2: admin balas harga + kirim link bayar (buat dari buat-link-presson.html)
+   Langkah 3: pelanggan buka link booking.html?po=... lalu bayar
+   ========================================================= */
+const UKURAN_PO = { XS:[3,6,5,7,9], S:[2,5,4,6,9], M:[1,5,4,6,8], L:[0,4,3,5,7], XL:[0,2,1,3,5] };
+const PO = { ref: [], bentuk: 'Almond', panjang: 'Medium', mode: 'tahu', size: 'M', f1: null, f2: null, kirim: 'ambil' };
+const okImg = f => f && f.type.startsWith('image/') && f.size <= 5 * 1024 * 1024;
+
+function chipGroup(id, onPick) {
+  $(id).querySelectorAll('.ch').forEach(c => c.onclick = () => {
+    $(id).querySelectorAll('.ch').forEach(x => x.classList.toggle('on', x === c));
+    onPick(c.dataset.v || c.textContent.trim());
+  });
+}
+chipGroup('poBentuk', v => { PO.bentuk = v; });
+chipGroup('poPanjang', v => { PO.panjang = v; });
+chipGroup('poKirim', v => { PO.kirim = v; $('poAlamat').hidden = v !== 'kirim'; });
+
+$('poSzBody').innerHTML = Object.entries(UKURAN_PO)
+  .map(([k, v]) => `<tr data-k="${k}"><td>${k}</td>${v.map(n => `<td>${n}</td>`).join('')}</tr>`).join('');
+function pickSize(k) {
+  PO.size = k;
+  $('poSzBody').querySelectorAll('tr').forEach(r => r.classList.toggle('on', r.dataset.k === k));
+  $('poPick').innerHTML = `<i class="ti ti-circle-check" style="color:var(--wa)"></i> Ukuran <b>${k}</b> dipilih · nomor tip ${UKURAN_PO[k].join(', ')}. Nomor kecil = tip lebih lebar.`;
+}
+$('poSzBody').querySelectorAll('tr').forEach(r => r.onclick = () => pickSize(r.dataset.k));
+pickSize('M');
+
+$('poMode').querySelectorAll('.po').forEach(m => m.onclick = () => {
+  PO.mode = m.dataset.m;
+  $('poMode').querySelectorAll('.po').forEach(x => x.classList.toggle('on', x === m));
+  $('poTahu').hidden = PO.mode !== 'tahu';
+  $('poKoin').hidden = PO.mode !== 'koin';
+});
+
+$('poRef').onchange = e => {
+  const all = [...e.target.files];
+  PO.ref = all.filter(okImg).slice(0, 3);
+  $('poErr').textContent = all.length > 3 ? 'Maksimal 3 gambar, hanya 3 pertama yang dipakai.'
+    : PO.ref.length < all.length ? 'Sebagian file dilewati: harus gambar dan maks. 5 MB.' : '';
+  $('poTh').innerHTML = PO.ref.map(f => `<img src="${URL.createObjectURL(f)}" alt="Referensi desain">`).join('');
+};
+document.querySelectorAll('#poKoin .slot input').forEach(inp => inp.onchange = e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  if (!okImg(f)) { $('poErr').textContent = 'Foto ukuran harus gambar dan maks. 5 MB.'; return; }
+  PO['f' + inp.dataset.k] = f;
+  const box = inp.closest('.slot');
+  box.querySelector('.pv').src = URL.createObjectURL(f);
+  box.classList.add('done');
+  $('poErr').textContent = '';
+});
+
+function poMessage() {
+  const ukuran = PO.mode === 'tahu'
+    ? `${PO.size} (nomor tip ${UKURAN_PO[PO.size].join(', ')})`
+    : 'Belum tahu, saya lampirkan 2 foto kuku dengan koin';
+  const ambil = PO.kirim === 'kirim' ? `Kirim ke ${$('poAlamat').value.trim()}` : 'Ambil di studio';
+  const note = $('poNote').value.trim();
+  return `Halo EM Beauty, saya mau pesan Press-On:\n` +
+    `• Bentuk: ${PO.bentuk}\n• Panjang: ${PO.panjang}\n• Ukuran: ${ukuran}\n• Pengambilan: ${ambil}\n` +
+    (note ? `• Catatan: ${note}\n` : '') +
+    `Foto referensi desain saya lampirkan. Mohon info harga dan estimasi selesai.`;
+}
+
+$('poSend').onclick = async () => {
+  let e = '';
+  if (!PO.ref.length) e = 'Upload minimal 1 foto referensi desain dulu.';
+  else if (PO.mode === 'koin' && (!PO.f1 || !PO.f2)) e = 'Upload Foto 1 dan Foto 2 untuk ukuran kuku dulu.';
+  else if (PO.kirim === 'kirim' && !$('poAlamat').value.trim()) e = 'Isi alamat pengiriman dulu.';
+  $('poErr').textContent = e;
+  $('poOk').hidden = true;
+  if (e) return;
+  const koin = PO.mode === 'koin';
+  const how = await shareWA(poMessage(), [...PO.ref, koin ? PO.f1 : null, koin ? PO.f2 : null]);
+  if (how === 'abort') return;
+  $('poOk').hidden = false;
+  $('poOk').textContent = how === 'shared'
+    ? 'Terkirim. Tunggu admin membalas harga dan link pembayaran di WhatsApp.'
+    : `WhatsApp sudah dibuka dengan pesan pesananmu. Lampirkan foto referensi${koin ? ' dan 2 foto ukuran' : ''} di chat, lalu tunggu admin membalas harga.`;
+};
+
+/* --- halaman bayar dari link admin --- */
+function initPOPay() {
+  $('form').hidden = true;
+  const card = $('poPay');
+  card.hidden = false;
+  const kode = (params.get('po') || '').slice(0, 30);
+  const harga = parseInt(params.get('harga'), 10);
+  const ongkir = Math.max(0, parseInt(params.get('ongkir') || '0', 10) || 0);
+  if (!kode || !harga || harga < 1000) {
+    card.innerHTML = `<h1 class="serif">Link <i class="tan">tidak valid</i></h1>
+      <p class="mut">Link pembayaran ini tidak lengkap. Silakan minta link baru ke admin.</p>
+      <button class="btn green" type="button" id="ppHelp"><i class="ti ti-brand-whatsapp"></i> CHAT ADMIN</button>`;
+    $('ppHelp').onclick = () => shareWA('Halo EM Beauty, link pembayaran press-on saya tidak bisa dibuka. Boleh minta link baru?');
+    return;
+  }
+  const total = harga + ongkir;
+  const dp = Math.round(total * CONFIG.presson.dpPersen / 100 / 1000) * 1000;
+  const P = { pay: 'dp', m: 'qris', file: null };
+  const setRow = (id, val) => { $(id + 'R').style.display = val ? 'flex' : 'none'; $(id).textContent = val || ''; };
+
+  $('ppKode').textContent = kode;
+  setRow('ppDesain', params.get('desain'));
+  setRow('ppUkuran', params.get('ukuran'));
+  setRow('ppEst', params.get('estimasi'));
+  $('ppHarga').textContent = rp(harga);
+  setRow('ppOngkir', ongkir ? rp(ongkir) : '');
+  $('ppTotal').textContent = rp(total);
+  $('ppDpPct').textContent = CONFIG.presson.dpPersen;
+  $('ppDpP').textContent = rp(dp);
+  $('ppFullP').textContent = rp(total);
+
+  const bayarPO = () => P.pay === 'dp' ? dp : total;
+  function render() {
+    $('ppPay').querySelectorAll('.po').forEach(x => x.classList.toggle('on', x.dataset.p === P.pay));
+    $('ppM').querySelectorAll('.ch').forEach(x => x.classList.toggle('on', x.dataset.m === P.m));
+    $('ppDet').innerHTML = payDetail(P.m, bayarPO());
+    bindCopy($('ppDet'));
+    $('ppSisaR').style.display = P.pay === 'dp' ? 'flex' : 'none';
+    $('ppSisa').textContent = rp(total - dp);
+    $('ppB').textContent = rp(bayarPO());
+  }
+  $('ppPay').querySelectorAll('.po').forEach(x => x.onclick = () => { P.pay = x.dataset.p; render(); });
+  $('ppM').querySelectorAll('.ch').forEach(x => x.onclick = () => { P.m = x.dataset.m; render(); });
+
+  function drawPPUpload() {
+    $('ppUpIn').innerHTML = P.file
+      ? `<div style="display:flex;gap:12px;align-items:center;text-align:left">
+           <img src="${P.file.url}" alt="Bukti pembayaran" style="width:60px;height:60px;object-fit:cover;border-radius:8px">
+           <div style="flex:1;min-width:0"><div class="ppName" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
+           <div style="font-size:12px;color:var(--wa)"><i class="ti ti-circle-check"></i> Bukti terunggah · klik untuk ganti</div></div></div>`
+      : `<i class="ti ti-photo-up tan" style="font-size:26px"></i>
+         <div style="margin-top:4px">Upload screenshot bukti pembayaran</div>
+         <div class="mut" style="font-size:12px">JPG atau PNG, maks. 5 MB.</div>`;
+    if (P.file) $('ppUpIn').querySelector('.ppName').textContent = P.file.raw.name;
+  }
+  $('ppFile').onchange = e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    if (!okImg(f)) { $('ppErr').textContent = 'File harus gambar dan maks. 5 MB.'; return; }
+    P.file = { raw: f, url: URL.createObjectURL(f) };
+    $('ppErr').textContent = '';
+    drawPPUpload();
+  };
+
+  $('ppGo').onclick = () => {
+    if (!P.file) { $('ppErr').textContent = 'Upload bukti pembayaran dulu.'; return; }
+    const jenis = P.pay === 'dp' ? `DP ${CONFIG.presson.dpPersen}%` : 'lunas';
+    const metode = P.m === 'qris' ? 'QRIS' : 'transfer BCA';
+    const msg = `Halo EM Beauty, saya sudah bayar ${jenis} ${rp(bayarPO())} via ${metode} untuk pesanan press-on ${kode}.\n` +
+      `• Total: ${rp(total)}\n` + (P.pay === 'dp' ? `• Sisa: ${rp(total - dp)}\n` : '') + `Berikut bukti pembayarannya.`;
+    card.innerHTML = `
+      <div style="text-align:center">
+        <div style="width:48px;height:48px;border-radius:50%;background:var(--btn);color:var(--btn-text);display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-size:24px"><i class="ti ti-check"></i></div>
+        <h1 class="serif" style="font-size:24px">Pembayaran <i class="tan">hampir selesai</i></h1>
+        <p class="mut" style="margin:0 0 16px">Kirim bukti ke WhatsApp admin supaya pesananmu mulai dikerjakan.</p>
+      </div>
+      <div class="box" style="margin:0">
+        <div class="row"><span class="mut">Dibayar (${jenis}, ${metode})</span><span>${rp(bayarPO())}</span></div>
+        ${P.pay === 'dp' ? `<div class="row"><span class="mut">Sisa sebelum dikirim</span><span>${rp(total - dp)}</span></div>` : ''}
+      </div>
+      <button class="wa" type="button" id="ppWA" style="margin-top:14px">
+        <span class="bub"><i class="ti ti-brand-whatsapp"></i></span>
+        <span style="flex:1"><span style="display:block;font-weight:500">Kirim bukti ke WhatsApp</span><span class="mut" style="font-size:12px">Lampirkan screenshot bukti di chat.</span></span>
+        <i class="ti ti-external-link" style="color:var(--wa)"></i>
+      </button>`;
+    $('ppWA').onclick = () => shareWA(msg, [P.file.raw]);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  drawPPUpload();
+  render();
+}
+
+S.main = defaultMain(S.c, params.get('layanan'));
+buildLists();
+drawUpload();
+update();
+if (params.get('po')) initPOPay();
+else if (params.get('kategori') === 'presson') document.querySelector('.tab[data-c="presson"]').click();
+</script>
+</body>
+</html>
